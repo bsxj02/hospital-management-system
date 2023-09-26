@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hospital.dao.DepartmentDao">
+
+	<select id="selectDepartmentList" resultType="com.hospital.entity.Department" parameterType="map">
+		select * from Department where 1 = 1
+
+		<if test="map.key != null and map.key != '' ">
+			<bind name="name" value="'%' + map.key + '%'" />
+			and dname like #{name}
+		</if>
+
+		order by id desc
+	</select>
+
+	<insert id="addDepartment" parameterType="com.hospital.entity.Department">
+		insert into Department (dname,detail)
+		values (#{cc.dname},#{cc.detail})
+	</insert>
+	
+
+	<delete id="deleteDepartment" parameterType="java.lang.Integer">
+		delete from Department
+		where id = #{id}
+	</delete>
+
+	<select id="selectDepartmentById" resultType="com.hospital.entity.Department"
+		parameterType="java.lang.Integer">
+		select * from Department where id = #{id}
+	</select>
+	
+
+	<update id="updateDepartment" parameterType="com.hospital.entity.Department">
+		update Department set
+		dname = #{cc.dname},
+		detail = #{cc.detail}
+		where id = #{cc.id}
+	</update>
+</mapper>
